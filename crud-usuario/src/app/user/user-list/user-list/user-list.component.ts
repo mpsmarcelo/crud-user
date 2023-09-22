@@ -1,8 +1,9 @@
 import { UsuarioService } from './../../service/usuario.service';
-import { Observable } from 'rxjs';
+import { Observable, delay } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../model/usuario.model';
 import { FormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
+import { Router, RouterLinkActive } from '@angular/router';
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -15,7 +16,6 @@ const ELEMENT_DATA: Usuario[] = [];
 
 export class UserListComponent implements OnInit{
 
-  listUser$ : Observable<Usuario[]> | undefined;
   displayedColumns: string[] = ['id', 'nome', 'email', 'senha', 'btnEditar','btnDelete'];
 
 
@@ -23,6 +23,7 @@ export class UserListComponent implements OnInit{
 
   constructor( private usuarioService: UsuarioService,
                private formBuilder : FormBuilder,
+               public router: Router,
              ){}
 
   ngOnInit(){
@@ -31,11 +32,16 @@ export class UserListComponent implements OnInit{
 
   listar(){
     this.usuarioService.findAll().subscribe(item =>{
+      delay(900000);
       this.dataSource = item;
-});
+    });
    }
 
    remover(id : number){
      this.usuarioService.delete(id);
+   }
+
+   editar(id :number){
+      this.router.navigate(['/cadastrar',id]);
    }
 }
