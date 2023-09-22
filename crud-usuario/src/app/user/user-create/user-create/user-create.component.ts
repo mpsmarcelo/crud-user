@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../service/usuario.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-user-create',
@@ -15,32 +16,49 @@ export class UserCreateComponent implements OnInit{
 
   formGroup :  FormGroup;
   userId : number | undefined;
-  usuario$ : Observable<Usuario> | undefined;
+  listUser$ : Usuario[] | undefined;
   private sub: any;
   constructor(private formBuilder : FormBuilder,
               private route : ActivatedRoute,
-              private usuarioService : UsuarioService ){
+              private usuarioService : UsuarioService,
+              private notifierService: NotifierService){
       {
         this.formGroup = this.formBuilder.group({
-          nome:  [Validators.required,Validators.min(3),Validators.max(50)],
-          email: [Validators.required],
-          senha: [Validators.required,Validators.min(6),Validators.max(20)]
+          id:[''],
+          nome:  ['', [Validators.required, Validators.minLength(6), Validators.maxLength(50)]],
+          email: ['', Validators.required],
+          senha: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]]
         })
       }
   }
 
   ngOnInit(){
     this.sub = this.route.params.subscribe(params => {
-      // this.usuario$ =  this.usuarioService.findById(params['id']);
+      this.usuarioService.findById(params['id']).subscribe(item=>{
+        this.formGroup.patchValue(item);
+      });
    });
   }
 
   salvar(){
-
+   this.usuarioService.create(this.formGroup.value).subscribe((result)=>{
+      if(result){
+        this.notifierService.notify('succcess',"Usuário salvo com successo!")
+      }
+   } );
   }
 
   deletar(){
+    this.usuarioService.delete(this.formGroup.value?.id).subscribe(result =>{
+      if(result){
+      this.limpar();
+      }
+  });
+  }
 
+
+  limpar(){
+    this.formGroup.reset();
   }
 
   ngOnDestroy() {
