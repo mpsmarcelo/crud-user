@@ -1,0 +1,26 @@
+<mat-toolbar>Cadatrar usuário</mat-toolbar>
+<div class="componente-container">
+  <form class="form-padrao" *ngIf="formGroup" [formGroup]="formGroup" (ngSubmit)="formGroup.valid && salvar()"
+      novalidate>
+      <mat-form-field>
+          <input matInput placeholder="Nome" formControlName="nome" required autocomplete="off">
+          <mat-error>Nome é obrigatório</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" required autocomplete="off">
+          <mat-error>Email é obrigatório</mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field>
+          <input matInput placeholder="Senha" formControlName="senha" required autocomplete="off">
+          <mat-error>Senha é obrigatória</mat-error>
+      </mat-form-field>
+
+      <div>
+          <button mat-raised-button color="primary" [disabled]="!formGroup.valid">Salvar</button>
+          <button *ngIf="!!usuario$" type="button" color="warn" mat-raised-button (click)="deletar()">Deletar</button>
+          <button type="button" mat-raised-button routerLink="/itens">Cancelar</button>
+      </div>
+  </form>

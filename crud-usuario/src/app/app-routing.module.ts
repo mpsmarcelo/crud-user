@@ -7,6 +7,12 @@ const routes: Routes = [{
 },{
   path:"usuario",
   loadChildren: ()=> import('./user/user-list/user-list.module').then(modulo => modulo.UserListModule)
+},{
+  path:"cadastrar",
+  loadChildren: ()=> import('./user/user-create/user-create.module').then(modulo => modulo.UserCreateModule)
+},{
+  path:"cadastrar/:id",
+  loadChildren: ()=> import('./user/user-create/user-create.module').then(modulo => modulo.UserCreateModule)
 }
 ];
 
