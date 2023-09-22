@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from '../../service/usuario.service';
 import { NotifierService } from 'angular-notifier';
+import { MessageService } from '../../service/message.service';
 
 @Component({
   selector: 'app-user-create',
@@ -21,7 +22,7 @@ export class UserCreateComponent implements OnInit{
   constructor(private formBuilder : FormBuilder,
               private route : ActivatedRoute,
               private usuarioService : UsuarioService,
-              private notifierService: NotifierService){
+              private menssage: MessageService){
       {
         this.formGroup = this.formBuilder.group({
           id:[''],
@@ -43,7 +44,8 @@ export class UserCreateComponent implements OnInit{
   salvar(){
    this.usuarioService.create(this.formGroup.value).subscribe((result)=>{
       if(result){
-        this.notifierService.notify('succcess',"Usuário salvo com successo!")
+        this.formGroup.patchValue(result);
+        this.menssage.success("Usuário salvo com successo!")
       }
    } );
   }
@@ -51,6 +53,7 @@ export class UserCreateComponent implements OnInit{
   deletar(){
     this.usuarioService.delete(this.formGroup.value?.id).subscribe(result =>{
       if(result){
+        this.menssage.success("Usuário removido com successo!")
       this.limpar();
       }
   });

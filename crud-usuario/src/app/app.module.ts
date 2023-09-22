@@ -12,6 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NotifierModule } from 'angular-notifier';
+import { MessageService } from './user/service/message.service';
+
 
 @NgModule({
   declarations: [
@@ -28,9 +31,16 @@ import { HttpClientModule } from '@angular/common/http';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    NotifierModule.withConfig({
+      behaviour: {autoHide:5000},
+      position: {
+          horizontal: {position: 'right'},
+          vertical: {position: 'top'}
+      }
+    })
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
