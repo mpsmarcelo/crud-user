@@ -31,7 +31,6 @@
             ],
             "styles": [
               "node_modules/angular-notifier/styles.scss",
-              "~/angular-notifier/styles.(scss|css)",
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
