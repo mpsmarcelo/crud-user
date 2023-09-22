@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../../model/usuario.model';
 import { FormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
 import { Router, RouterLinkActive } from '@angular/router';
+import { MessageService } from '../../service/message.service';
 
 
 const ELEMENT_DATA: Usuario[] = [];
@@ -24,6 +25,7 @@ export class UserListComponent implements OnInit{
   constructor( private usuarioService: UsuarioService,
                private formBuilder : FormBuilder,
                public router: Router,
+               private menssage: MessageService
              ){}
 
   ngOnInit(){
@@ -32,13 +34,17 @@ export class UserListComponent implements OnInit{
 
   listar(){
     this.usuarioService.findAll().subscribe(item =>{
-      delay(900000);
-      this.dataSource = item;
+        this.dataSource = item;
     });
    }
 
    remover(id : number){
-     this.usuarioService.delete(id);
+     this.usuarioService.delete(id).subscribe(result =>{
+        if(result){
+          this.menssage.success("Usuário removido com successo!")
+          this.listar();
+        }
+     });
    }
 
    editar(id :number){
