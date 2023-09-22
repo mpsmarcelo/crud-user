@@ -24,5 +24,8 @@ export class UsuarioService {
     return this.httpClient.get<Usuario[]>(this.url);
   }
 
+  findById(id:number):Observable<Usuario[]>{
+    return this.httpClient.get<Usuario[]>(this.url);
+  }
 
 }

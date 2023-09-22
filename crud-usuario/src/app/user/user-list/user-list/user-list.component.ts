@@ -5,11 +5,7 @@ import { Usuario } from '../../model/usuario.model';
 import { FormBuilder, FormControl, UntypedFormGroup } from '@angular/forms';
 
 
-const ELEMENT_DATA: Usuario[] = [
-  {id: 1, nome: 'Marcelo pereira', email: "marcelo@gmail.com", senha: 'H'},
-  {id: 2, nome: 'Marcos pereira ', email: "marcos@gmail.com", senha: 'He'},
-
-];
+const ELEMENT_DATA: Usuario[] = [];
 
 @Component({
   selector: 'app-user-list',
@@ -30,10 +26,16 @@ export class UserListComponent implements OnInit{
              ){}
 
   ngOnInit(){
-      this.listar()
+      this.listar();
   }
 
   listar(){
-    this.listUser$  = this.usuarioService.findAll();
+    this.usuarioService.findAll().subscribe(item =>{
+      this.dataSource = item;
+});
+   }
+
+   remover(id : number){
+     this.usuarioService.delete(id);
    }
 }

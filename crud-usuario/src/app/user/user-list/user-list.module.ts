@@ -9,6 +9,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { UserListComponent } from './user-list/user-list.component';
 import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {MatCardModule} from '@angular/material/card';
     MatToolbarModule,
     MatFormFieldModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    MatButtonModule
   ]
 })
 export class UserListModule { }
