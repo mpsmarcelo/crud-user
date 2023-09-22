@@ -1,7 +1,7 @@
+import { Usuario } from './../model/usuario.model';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from  '@angular/common/http';
-import { Usuario } from '../model/usuario.model';
 
 
 @Injectable({
@@ -21,11 +21,20 @@ export class UsuarioService {
   }
 
   delete(id:number):Observable<Usuario[]>{
-    return this.httpClient.get<Usuario[]>(this.url);
+    return this.httpClient.delete<Usuario[]>(this.url+'/'+id);
   }
 
   findById(id:number):Observable<Usuario[]>{
-    return this.httpClient.get<Usuario[]>(this.url);
+    return this.httpClient.get<Usuario[]>(this.url+'/'+id);
+  }
+
+  create(user : Usuario):Observable<Usuario>{
+    if(!user?.id){
+      return this.httpClient.post<Usuario>(this.url,user);
+    }else{
+      return this.httpClient.put<Usuario>(this.url,user);
+    }
+
   }
 
 }
